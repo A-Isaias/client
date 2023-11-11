@@ -17,12 +17,30 @@ function App() {
 
   const [empleadosList, setEmpleados] = useState([]);
 
+// EJECUTA GETEMPLEADOS UNA SOLA VEZ AL CARGAR LA PAGINA
   useEffect(() => {
-    // La siguiente línea asegura que getEmpleados se ejecute solo una vez al montar el componente
     getEmpleados();
   }, []);
 
+// ACA SE VALIDAN LOS DATOS DEL FORMULARIO
+  const validarCampos = () => {
+    if (!nombre || !edad || !pais || !cargo || !antiguedad) {
+      Swal.fire({
+        icon: "error",
+        title: "Campos Incompletos",
+        text: "Por favor, complete todos los campos antes de guardar.",
+      });
+      return false;
+    }
+    return true;
+  };
+
+  //CHEQUEA SI LOS CAMPOS ESTAN VALIDADOS
   const add = () => {
+    if (!validarCampos()) {
+      return;
+    }
+
     Axios.post("http://localhost:3001/create", {
       nombre: nombre,
       edad: edad,
@@ -52,7 +70,11 @@ function App() {
     
   };
 
+  //CHEQUEA SI LOS CAMPOS ESTAN VALIDADOS
   const update = () => {
+  if (!validarCampos()) {
+    return;
+  }
     Axios.put("http://localhost:3001/update", {
       id: id,
       nombre: nombre,
@@ -83,6 +105,7 @@ function App() {
     
   };
 
+  
   const deletereg = (val) => {
     Swal.fire({
       title: "Confirmar Eliminacion",
