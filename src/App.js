@@ -105,8 +105,7 @@ function App() {
     
   };
 
-  
-  const deletereg = (val) => {
+    const deletereg = (val) => {
     Swal.fire({
       title: "Confirmar Eliminacion",
       html:
